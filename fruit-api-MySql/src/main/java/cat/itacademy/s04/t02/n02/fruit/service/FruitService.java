@@ -1,8 +1,8 @@
 package cat.itacademy.s04.t02.n02.fruit.service;
 
-import cat.itacademy.s04.t02.n01.fruitapih2.fruit.exception.FruitNotFoundException;
-import cat.itacademy.s04.t02.n01.fruitapih2.fruit.model.Fruit;
-import cat.itacademy.s04.t02.n01.fruitapih2.fruit.repository.FruitRepository;
+import cat.itacademy.s04.t02.n02.fruit.exception.FruitNotFoundException;
+import cat.itacademy.s04.t02.n02.fruit.model.Fruit;
+import cat.itacademy.s04.t02.n02.fruit.repository.FruitRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

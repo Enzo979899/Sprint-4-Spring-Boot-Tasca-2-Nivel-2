@@ -1,9 +1,10 @@
 package cat.itacademy.s04.t02.n02.fruit.controller;
 
-import cat.itacademy.s04.t02.n01.fruitapih2.fruit.dto.FruitRequest;
-import cat.itacademy.s04.t02.n01.fruitapih2.fruit.dto.FruitResponse;
-import cat.itacademy.s04.t02.n01.fruitapih2.fruit.model.Fruit;
-import cat.itacademy.s04.t02.n01.fruitapih2.fruit.service.FruitService;
+
+import cat.itacademy.s04.t02.n02.fruit.dto.FruitRequest;
+import cat.itacademy.s04.t02.n02.fruit.dto.FruitResponse;
+import cat.itacademy.s04.t02.n02.fruit.model.Fruit;
+import cat.itacademy.s04.t02.n02.fruit.service.FruitService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

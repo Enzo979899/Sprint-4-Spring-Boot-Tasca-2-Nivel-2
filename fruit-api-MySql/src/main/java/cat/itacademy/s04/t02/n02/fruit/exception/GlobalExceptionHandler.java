@@ -29,4 +29,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @ExceptionHandler(ProviderAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleProviderAlreadyExists(
+            ProviderAlreadyExistsException exception) {
+
+        ApiError error = new ApiError(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT.getReasonPhrase(),
+                exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
 }
