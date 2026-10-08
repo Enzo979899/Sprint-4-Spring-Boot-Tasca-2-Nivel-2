@@ -23,12 +23,9 @@ public class FruitController {
     }
 
     @PostMapping
-    public ResponseEntity<FruitResponse> create(
-            @Valid @RequestBody FruitRequest request) {
+    public ResponseEntity<FruitResponse> create(@Valid @RequestBody FruitRequest request) {
 
-        Fruit fruit = new Fruit(null, request.name(), request.weightInKilos());
-
-        Fruit savedFruit = fruitService.create(fruit);
+        Fruit savedFruit = fruitService.create(request.name(), request.weightInKilos(), request.providerId());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(FruitResponse.from(savedFruit));
     }
@@ -47,9 +44,7 @@ public class FruitController {
     @PutMapping("/{id}")
     public FruitResponse update(@PathVariable Long id, @Valid @RequestBody FruitRequest request) {
 
-        Fruit fruit = new Fruit(null, request.name(), request.weightInKilos());
-
-        Fruit updatedFruit = fruitService.update(id, fruit);
+        Fruit updatedFruit = fruitService.update(id, request.name(), request.weightInKilos(), request.providerId());
 
         return FruitResponse.from(updatedFruit);
     }

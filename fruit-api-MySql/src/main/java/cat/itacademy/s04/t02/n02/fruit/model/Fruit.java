@@ -11,16 +11,18 @@ public class Fruit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private  double weightInKilos;
+    private double weightInKilos;
+    private Provider provider;
 
     public Fruit() {
 
     }
 
-    public Fruit(Long id, String name, double weightInKilos) {
+    public Fruit (Long id, String name, double weightInKilos, Provider provider) {
         this.id = id;
         this.name = name;
         this.weightInKilos = weightInKilos;
+        this.provider = provider;
     }
 
     public Long getId() {
@@ -33,5 +35,9 @@ public class Fruit {
 
     public double getWeightInKilos() {
         return weightInKilos;
+    }
+
+    public Provider getProvider() {
+        return provider;
     }
 }
