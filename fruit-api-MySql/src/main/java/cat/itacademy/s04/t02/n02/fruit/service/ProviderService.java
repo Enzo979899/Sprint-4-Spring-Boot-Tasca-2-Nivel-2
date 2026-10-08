@@ -18,7 +18,7 @@ public class ProviderService {
     public Provider create(Provider provider) {
 
         if (providerRepository.existsByName(provider.getName())) {
-            throw new ProviderAlreadyExistsException("Provider already exists: " + provider.getName());
+            throw new ProviderAlreadyExistsException(provider.getName());
         }
 
         return providerRepository.save(provider);
