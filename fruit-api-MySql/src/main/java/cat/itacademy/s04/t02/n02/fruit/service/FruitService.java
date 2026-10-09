@@ -54,4 +54,14 @@ public class FruitService {
         Fruit fruit = findById(id);
         fruitRepository.delete(fruit);
     }
+
+    public List<Fruit> findByProviderId(Long providerId) {
+
+        if (!providerRepository.existsById(providerId)) {
+            throw new ProviderNotFoundException(providerId);
+        }
+
+        return fruitRepository.findByProviderId(providerId);
+    }
+
 }
