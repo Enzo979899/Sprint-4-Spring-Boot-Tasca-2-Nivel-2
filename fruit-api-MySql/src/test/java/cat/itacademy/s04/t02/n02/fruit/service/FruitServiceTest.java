@@ -176,4 +176,35 @@ class FruitServiceTest {
 
         verify(fruitRepository, never()).save(any(Fruit.class));
     }
+
+    @Test
+    void shouldFindFruitsByProviderId() {
+
+        Provider provider = new Provider("Frutas del Sur", "España");
+
+        Fruit manzana = new Fruit(1L, "Manzana", 2.5, provider);
+        Fruit pera = new Fruit(2L, "Pera", 1.8, provider);
+
+        when(providerRepository.existsById(1L)).thenReturn(true);
+
+        when(fruitRepository.findByProviderId(1L)).thenReturn(List.of(manzana, pera));
+
+        List<Fruit> result = fruitService.findByProviderId(1L);
+
+        assertEquals(2, result.size());
+        assertEquals("Manzana", result.get(0).getName());
+        assertEquals("Pera", result.get(1).getName());
+
+        verify(fruitRepository).findByProviderId(1L);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenFilteringByNonExistingProvider() {
+
+        when(providerRepository.existsById(999L)).thenReturn(false);
+
+        assertThrows(ProviderNotFoundException.class, () -> fruitService.findByProviderId(999L));
+
+        verify(fruitRepository, never()).findByProviderId(anyLong());
+    }
 }
