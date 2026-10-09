@@ -159,5 +159,5 @@ docker compose down
 
 Para ejecutar la API desde IntelliJ mientras Docker ejecuta MySQL, la conexión configurada apunta a `localhost:3307`. Para ejecutarla dentro de Docker, Compose proporciona la URL interna `jdbc:mysql://mysql:3306/fruit_api_mysql`.
 
-##UML
+## UML
 ![UML](./docs/fruit-api-mysql-uml.svg)
