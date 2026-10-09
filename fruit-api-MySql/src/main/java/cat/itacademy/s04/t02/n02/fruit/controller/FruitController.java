@@ -31,8 +31,19 @@ public class FruitController {
     }
 
     @GetMapping
-    public List<FruitResponse> findAll() {
-        return fruitService.findAll().stream().map(FruitResponse::from).toList();
+    public ResponseEntity<List<FruitResponse>> findAll(@RequestParam(required = false) Long providerId) {
+
+        List<Fruit> fruits;
+
+        if (providerId == null) {
+            fruits = fruitService.findAll();
+        } else {
+            fruits = fruitService.findByProviderId(providerId);
+        }
+
+        List<FruitResponse> response = fruits.stream().map(FruitResponse::from).toList();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -54,4 +65,5 @@ public class FruitController {
         fruitService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 }
