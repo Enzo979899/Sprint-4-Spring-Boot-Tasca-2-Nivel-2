@@ -1,9 +1,6 @@
 package cat.itacademy.s04.t02.n02.fruit.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Fruit {
@@ -12,6 +9,8 @@ public class Fruit {
     private Long id;
     private String name;
     private double weightInKilos;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 
     public Fruit() {
