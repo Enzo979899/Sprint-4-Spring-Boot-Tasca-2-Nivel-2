@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -221,6 +222,40 @@ class FruitControllerTest {
                         .value(404)).andExpect(jsonPath("$.error")
                         .value("Not Found")).andExpect(jsonPath("$.message")
                 .value("Provider with id 999 not found"));
+    }
+
+    @Test
+    void shouldReturnFruitsFilteredByProviderId() throws Exception {
+
+        Provider provider = new Provider("Frutas del Sur", "España");
+        ReflectionTestUtils.setField(provider, "id", 1L);
+
+        Fruit manzana = new Fruit(1L, "Manzana", 2.5, provider);
+        Fruit pera = new Fruit(2L, "Pera", 1.8, provider);
+
+        when(fruitService.findByProviderId(1L)).thenReturn(List.of(manzana, pera));
+
+        mockMvc.perform(get("/fruits").param("providerId", "1")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].name").value("Manzana"))
+                .andExpect(jsonPath("$[0].providerId").value(1))
+                .andExpect(jsonPath("$[1].name").value("Pera"))
+                .andExpect(jsonPath("$[1].providerId").value(1));
+
+        verify(fruitService).findByProviderId(1L);
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenFilteringByNonExistingProvider() throws Exception {
+
+        when(fruitService.findByProviderId(999L)).thenThrow(new ProviderNotFoundException(999L));
+
+        mockMvc.perform(get("/fruits").param("providerId", "999"))
+                .andExpect(status().isNotFound()).andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.error").value("Not Found"))
+                .andExpect(jsonPath("$.message").value("Provider with id 999 not found"));
+
+        verify(fruitService).findByProviderId(999L);
     }
 }
 
